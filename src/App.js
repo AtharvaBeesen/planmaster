@@ -1,56 +1,60 @@
-// App.js
-
 import React, { useState } from 'react';
-import SearchForm from './SearchForm';
-import ItineraryList from './ItineraryList';
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
 import Header from './Header';
+import MyTrips from './MyTrips';
+import MyAccount from './MyAccount';
 import './App.css';
-import beachImage from './beach.png'; // Import the beach image
+import beachImage from './beach.png';
+import Step1LocationDate from './Step1LocationDate';
+import Step2Itineraries from './Step2Itineraries';
+import Step3Map from './Step3Map';
+import Step4Confirmation from './Step4Confirmation';
 
 function App() {
   const [itineraries, setItineraries] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [showItineraries, setShowItineraries] = useState(false); // New state to control visibility of itineraries
+  const [selectedItinerary, setSelectedItinerary] = useState(null);
+  const [searchParams, setSearchParams] = useState({});
 
-  const handleSearch = async (searchParams) => {
-    setLoading(true);
-    setError('');
-    try {
-      // Simulate an API call
-      const mockItineraries = [
-        { id: 1, name: 'Beach Getaway', description: 'Relax on the beach for 3 days' },
-        { id: 2, name: 'Mountain Adventure', description: 'Hiking and camping in the mountains' },
-        { id: 3, name: 'City Exploration', description: 'Explore museums, parks, and restaurants' }
-      ];
-      // Simulate network delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      setItineraries(mockItineraries);
-      setShowItineraries(true); // Show itineraries when search is successful
-    } catch (err) {
-      setError('Failed to fetch itineraries');
-    }
-    setLoading(false);
+  const handleSearch = async (params) => {
+    setSearchParams(params);
+    const mockItineraries = [
+      { id: 1, name: 'Beach Getaway', description: 'Relax on the beach for 3 days' },
+      { id: 2, name: 'Mountain Adventure', description: 'Hiking and camping in the mountains' },
+      { id: 3, name: 'City Exploration', description: 'Explore museums, parks, and restaurants' }
+    ];
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    setItineraries(mockItineraries);
   };
 
   return (
-    <div className="App">
-      <Header />
-      <div className="landing">
-        <div className="landing-image-container">
-          <img src={beachImage} alt="Beach" className="landing-image" />
-          <div className="landing-image-overlay"></div>
-        </div>
-        <div className="landing-text">
-          <h1>ready to plan your perfect trip...</h1>
-        </div>
-        <div className="form-container">
-          <SearchForm onSearch={handleSearch} />
-        </div>
+    <Router>
+      <div className="App">
+        <Header />
+        <Routes>
+          <Route path="/" element={
+            <div className="landing">
+              <div className="landing-image-container">
+                <img src={beachImage} alt="Beach" className="landing-image" />
+                <div className="landing-image-overlay"></div>
+              </div>
+              <div className="landing-text">
+                <h1>ready to plan your perfect trip...</h1>
+              </div>
+              <div className="form-container">
+                <Step1LocationDate onSearch={handleSearch} />
+              </div>
+            </div>
+          } />
+          <Route path="/itineraries" element={<Step2Itineraries itineraries={itineraries} setSelectedItinerary={setSelectedItinerary} />} />
+          <Route path="/map" element={<Step3Map selectedItinerary={selectedItinerary} />} />
+          <Route path="/confirmation" element={<Step4Confirmation itinerary={selectedItinerary} searchParams={searchParams} />} />
+          <Route path="/my-trips" element={<MyTrips />} />
+          <Route path="/my-account" element={<MyAccount />} />
+        </Routes>
       </div>
-      {showItineraries && <ItineraryList itineraries={itineraries} />} {/* Render ItineraryList when showItineraries is true */}
-    </div>
+    </Router>
   );
 }
 
 export default App;
+

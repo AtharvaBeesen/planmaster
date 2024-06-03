@@ -1,13 +1,12 @@
 import React from 'react';
 
-function MyAccount() {
+function MyTrips() {
   return (
     <div>
-      <h2>My Account</h2>
+      <h2>My Trips</h2>
       {/* Add content for My Account */}
     </div>
   );
 }
 
-export default MyAccount;
-
+export default MyTrips;
