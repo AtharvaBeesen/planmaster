@@ -1,4 +1,5 @@
 import React from 'react';
+import ProgressBar from './ProgressBar';
 
 function Step4Confirmation({ itinerary, searchParams }) {
   if (!itinerary) {

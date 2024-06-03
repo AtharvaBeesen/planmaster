@@ -18,9 +18,9 @@ function App() {
   const handleSearch = async (params) => {
     setSearchParams(params);
     const mockItineraries = [
-      { id: 1, name: 'Beach Getaway', description: 'Relax on the beach for 3 days' },
-      { id: 2, name: 'Mountain Adventure', description: 'Hiking and camping in the mountains' },
-      { id: 3, name: 'City Exploration', description: 'Explore museums, parks, and restaurants' }
+      { id: 1, name: 'Miami', description: 'Explore museums, Cuban food, and parks' },
+      { id: 2, name: 'Tampa', description: 'Walk around the historic district' },
+      { id: 3, name: 'Fort Lauderdale', description: 'Relax on the beach for 3 days' }
     ];
     await new Promise(resolve => setTimeout(resolve, 1000));
     setItineraries(mockItineraries);
