@@ -1,38 +1,109 @@
+/* App.css */
+:root {
+  --theme-color: #5271FF;
+  --font-family: 'Plus Jakarta Sans', sans-serif; /* Define the font family variable */
+}
+
+body {
+  font-family: var(--font-family); /* Apply the font family to the body */
+}
+
+/* Other styles remain unchanged */
+
+
 .App {
-  text-align: center;
+  font-family: var(--font-family);
+  max-width: 800px;
+  margin: auto;
+  padding-top: 80px; /* Add padding to the top to account for the fixed header */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.landing {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  text-align: center;
+}
+
+.landing-content {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.landing-image-container {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.landing-image {
+  width: 100%;
+  height: auto;
+}
+
+.landing-image-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(transparent, white); /* Start from transparent at the top and fade into white */
+  z-index: 1;
+}
+
+
+.landing-text {
+  color: var(--theme-color);
+  margin-top: -50px; /* Adjust as needed */
+  z-index: 2;
+}
+
+.form-container {
+  margin-top: 50px; /* Adjust as needed */
+}
+
+.theme-text {
+  color: var(--theme-color);
+}
+
+form div {
+  margin-bottom: 10px;
+}
+
+form label {
+  margin-right: 10px;
+}
+
+form input {
+  padding: 5px;
+}
+
+button {
+  padding: 10px 15px;
+  background-color: var(--theme-color);
   color: white;
+  border: none;
+  cursor: pointer;
 }
 
-.App-link {
-  color: #61dafb;
+button:hover {
+  background-color: #4059b8;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.error {
+  color: red;
 }
