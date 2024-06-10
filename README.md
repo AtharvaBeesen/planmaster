@@ -1,2 +1,2 @@
 ## PlanMaster
-please see planmaster-pitch for details about our product
+please see planmaster-pitch.pdf for details about our product
