@@ -1,0 +1,12 @@
+Individual imports (keep track of any new ones needed below):
+** be sure to install these in a virtual env for isolation + to make sure you're there's no python version inconsistencies **
+
+pip install serpapi
+pip install requests
+pip install beautifulsoup4
+pip install praw
+pip install langchain-google-genai
+
+OR do it in one line:
+
+pip install serpapi requests beautifulsoup4 praw langchain-google-genai
