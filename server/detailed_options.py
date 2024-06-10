@@ -30,12 +30,20 @@ def individual_places():
 
     file.close()
 
+    listedItinerary = extract_details(itinerary)
+
+    return listedItinerary #listed out places, restaurants, tips, transportation for each place chosen
+
+    #next step is to take this list and plan out the days according to th enumber of days that were chosen
+
 
 
 def summarize_content(loc, dur):
     #gathering general trip info from top 5 reddits/blogs: CHANGE NUMBER!!!
 
     redditContent, blogContent = scrapeRedditAndBlogs(loc, dur)
+
+    #TOOK OUT THE DURATION FROM THE LLM BELOW SO ONLY LOC - INVOLVE DUR LATER IN GOOGLE MAPS
 
     redditSummaries = ""
 
@@ -55,7 +63,7 @@ def summarize_content(loc, dur):
 
     finalSummary = summarizeText(finalRSummary+finalBSummary, 
     
-    """ \n combine these in the following format for """ + dur + " days in " + loc + """:
+    """ \n combine these in the following format for a trip to """ +  loc + """:
         bulleted list of all places to visit, bulleted list of all restaurant options, bulleted list of all tips to keep in mind,
         best mode of transporation for this place
     """)
@@ -86,10 +94,64 @@ def summarizeText(text, addition):
     return response.content
 
 
+def breakdown_section(section):
+    places = []
+    restaurants = []
+    tips = []
+    transportation = []
+
+    lines = section.split("\n")
+    current_list = None
+
+    for line in lines:
+        line = line.strip()
+        if "Places" in line:
+            current_list = places
+        elif "Restaurant" in line:
+            current_list = restaurants
+        elif "Tips" in line:
+            current_list = tips
+        elif "Transporation" in line:
+            current_list = transportation
+        elif line.startswith("* ") or line.startswith("- "):
+            if current_list is not None:
+                current_list.append(line[2:])
+        elif line and current_list is transportation:
+            transportation.append(line)
+
+    return places, restaurants, tips, transportation
+
+
+def extract_details(info_text):
+    sections = info_text.split("***************")[1:]
+
+    itinerary = {}
+
+    for section in sections:
+        lines = section.strip().split("\n")
+        if lines:
+            # Extract the city name from the first line
+            city_line = lines[0].strip()
+            city_name = city_line.split(" in ")[-1]
+            # Extract information for the current city
+            section_info = breakdown_section(section)
+            # Add to the itinerary dictionary
+            itinerary[city_name] = section_info
+
+    return itinerary
+
+
+
 
 individual_places()
 
     
+    
+
+
+
+
+
     
 
 
