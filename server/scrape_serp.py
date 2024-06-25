@@ -30,7 +30,7 @@ def scrapeInitial():
 
     initItineraryContent = etContent + kimContent #consolidate info
 
-    return initItineraryContent, loc, dur
+    return initItineraryContent
 
 def scrapeRedditAndBlogs(loc, dur):
     blogLinks, redditLinks = scrapeSERP(loc, dur) #call link scraper, save into blog and reddit links

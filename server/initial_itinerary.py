@@ -51,7 +51,7 @@ import time
 
 # summarizeGeneral()
 
-def developOptions():
+def developOptions(loc, dur):
     initialContent, loc, dur = scrapeInitial()
 
     #iteratively add to a summary string (adding 1 source info at a time)
