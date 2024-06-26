@@ -51,8 +51,10 @@ import time
 
 # summarizeGeneral()
 
+finalized_options = {}
+
 def developOptions(loc, dur):
-    initialContent, loc, dur = scrapeInitial()
+    initialContent = scrapeInitial(loc, dur)
 
     #iteratively add to a summary string (adding 1 source info at a time)
 
@@ -101,8 +103,9 @@ def developOptions(loc, dur):
 
         #final content will be response of final query
 
-    finalPrompt = itineraryContent + """ 
-    \n \n use this information to create """ + dur + """ day itinerary options within """ + loc + """with places and respective days required there \n\n
+    finalPrompt = str(itineraryContent)
+
+    s = "\n \n use this information to create " + str(dur) + " day itinerary options within " + loc + """with places and respective days required there \n\n
 
     Format each option as such, changing the hashtags to numbers as required and adding as many lines per option as required: \n
     *** \n
@@ -110,12 +113,11 @@ def developOptions(loc, dur):
     City name, # days \n
     City name, # days \n
     *** \n
-
     """
 
     print("\nalmost there...")
 
-    response = llm.invoke(finalPrompt)
+    response = llm.invoke(finalPrompt + str(s))
 
     itineraryOptions = response.content
 
@@ -123,11 +125,11 @@ def developOptions(loc, dur):
 
     options_dict = saveOptions(itineraryOptions)
 
-    print("\n\nChoose an option that excites you!\nYou will be able to customizer the specifics of it later!\n\n\n")
+    #print("\n\nChoose an option that excites you!\nYou will be able to customizer the specifics of it later!\n\n\n")
 
-    optionChosen = input()
+    #optionChosen = input()
 
-    print("Nice, option " + optionChosen + " chosen.\n")
+    #print("Nice, option " + optionChosen + " chosen.\n")
 
     # print(options_dict)
 
@@ -166,5 +168,9 @@ def saveOptions(options):
             # Add the option to the dictionary
             optionsSaved[option_number] = places_durations
 
+    finalized_options.update(optionsSaved)
+    
     return optionsSaved
 
+def getOptions():
+    return finalized_options

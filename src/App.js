@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './Header';
 import MyTrips from './MyTrips';
 import MyAccount from './MyAccount';
 import './App.css';
+import axios from 'axios';
 import beachImage from './beach.png';
 import Step1LocationDate from './Step1LocationDate';
 import Step2Itineraries from './Step2Itineraries';
@@ -14,6 +15,17 @@ function App() {
   const [itineraries, setItineraries] = useState([]);
   const [selectedItinerary, setSelectedItinerary] = useState(null);
   const [searchParams, setSearchParams] = useState({});
+  const [data, setData] = useState(null);
+
+  const getOptions = useEffect(() => {
+    axios.get('http://localhost:8000/get-itinerary')
+    .then(response => {
+      setData(response.data);
+    })
+    .catch(error => {
+      console.error("Error fetching data", error)
+    });
+  }, []);
 
   const handleSearch = async (params) => {
     setSearchParams(params);
@@ -70,7 +82,17 @@ function App() {
               </div>
             </div>
           } />
-          <Route path="/itineraries" element={<Step2Itineraries itineraries={itineraries} setSelectedItinerary={setSelectedItinerary} />} />
+          <Route path="/itineraries" element={
+                <div>
+                <h1>Data from Flask Backend</h1>
+                {data ? (
+                  <pre>{JSON.stringify(data, null, 2)}</pre>
+                ) : (
+                  <p>Loading data...</p>
+                )}
+              </div>
+          } />
+          {/* <Route path="/itineraries" element={<Step2Itineraries itineraries={itineraries} setSelectedItinerary={setSelectedItinerary} />} /> */}
           <Route path="/map" element={<Step3Map selectedItinerary={selectedItinerary} />} />
           <Route path="/confirmation" element={<Step4Confirmation itinerary={selectedItinerary} searchParams={searchParams} />} />
           <Route path="/my-trips" element={<MyTrips />} />

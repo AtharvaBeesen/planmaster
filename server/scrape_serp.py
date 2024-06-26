@@ -7,11 +7,14 @@ import praw
 #function to scrape top 20 reddit results 
 #and top 20 blogs for a trip to country x for y days
 
-def scrapeInitial():
-    print('i want to go to: ')
-    loc = input()
-    print('i want to go for these many days: ')
-    dur = input()
+def scrapeInitial(loc, dur):
+    #print('i want to go to: ')
+    #loc = input()
+    #print('i want to go for these many days: ')
+    #dur = input()
+
+    print (loc)
+    print(str(dur))
 
     initEarthLinks = scrapeSERPInitial(loc, dur, "earthtrekkers")
     initKimLinks = scrapeSERPInitial(loc, dur, "kimkim")
@@ -30,6 +33,7 @@ def scrapeInitial():
 
     initItineraryContent = etContent + kimContent #consolidate info
 
+    print(initItineraryContent)
     return initItineraryContent
 
 def scrapeRedditAndBlogs(loc, dur):
@@ -55,7 +59,7 @@ def scrapeRedditAndBlogs(loc, dur):
 
 def scrapeSERPInitial(loc, dur, site_name):
 
-    query = dur + "days in " + loc + " " + site_name
+    query = str(dur) + "days in " + loc + " " + site_name
 
     params = {
         "q": query,

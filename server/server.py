@@ -5,7 +5,7 @@ from flask_cors import CORS
 import os
 from datetime import datetime
 #imported devOps function
-from initial_itinerary import developOptions
+from initial_itinerary import developOptions, getOptions
 
 # Routes
 
@@ -15,6 +15,11 @@ CORS(app)
 @app.route("/test")
 def test():
     return {"test": ["test1","test2","test3"]}
+
+@app.route("/get-itinerary", methods=["GET"])
+def get_itinerary():
+    data = getOptions()
+    return jsonify(data)
 
 @app.route("/submit", methods=["POST"]) 
 def formSubmit():
