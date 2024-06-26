@@ -131,9 +131,7 @@ def developOptions(loc, dur):
 
     # print(options_dict)
 
-    #return options_dict, optionChosen
-
-    return options_dict
+    return options_dict, optionChosen
 
 
 

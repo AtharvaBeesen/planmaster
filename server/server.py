@@ -4,8 +4,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
 from datetime import datetime
-#imported devOps function
-from initial_itinerary import developOptions
+# import initial_itinerary
 
 # Routes
 
@@ -47,20 +46,14 @@ def formSubmit():
 
     # Subtract the dates
 
-    # Calculate the duration in days
-    duration_days = (end_date - start_date).days
+    difference = end_date - start_date
 
-    # Use the developOptions function to get itinerary options
-    itineraries = developOptions(location, duration_days)
+    loc = location
+    dur = str(difference)[0]
 
-    # Prepare the response data
-    response_data = {
-        'location': location,
-        'startDate': startDate,
-        'endDate': endDate,
-        'durationDays': duration_days,
-        'itineraries': itineraries
-    }
+    #got the 2 params, not use functions to do work and give possible itineraries
+
+    # options = developOptions(loc, dur)
 
     return jsonify(response_data), 201
 

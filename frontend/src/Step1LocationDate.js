@@ -95,6 +95,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './SearchForm.css';
+import ProgressBar from './ProgressBar';
 
 function Step1LocationDate({ onSearch }) {
   const [location, setLocation] = useState('');
