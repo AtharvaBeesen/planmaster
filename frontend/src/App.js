@@ -17,14 +17,48 @@ function App() {
 
   const handleSearch = async (params) => {
     setSearchParams(params);
-    const mockItineraries = [
-      { id: 1, name: 'Miami', description: 'Explore museums, Cuban food, and parks' },
-      { id: 2, name: 'Tampa', description: 'Walk around the historic district' },
-      { id: 3, name: 'Fort Lauderdale', description: 'Relax on the beach for 3 days' }
-    ];
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    setItineraries(mockItineraries);
+    const formData = {
+      location: params.location,
+      startDate: params.startDate,
+      endDate: params.endDate
+    };
+
+    try {
+      const response = await fetch('http://localhost:8000/submit', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+      });
+      //update how we are storing itineraries
+
+      if (response.ok) {
+        const data = await response.json(); // Parse JSON response
+        const { location, startDate, endDate, durationDays, options } = data;
+    
+        // Transform options into an array of objects suitable for rendering
+        const transformedItineraries = Object.keys(options).map(key => ({
+            id: key,
+            name: `Option ${key}`,
+            description: options[key]
+        }));
+    
+        setItineraries(transformedItineraries); // Update state with transformed itineraries
+    
+        console.log('Form submitted successfully!');
+        setLocation('');
+        setStartDate('');
+        setEndDate('');
+        navigate('/itineraries'); // Navigate to itineraries page
+      } else {
+          console.error('Error submitting form.');
+      }
+    } catch (error) {
+      console.error('An unexpected error occurred:', error);
+    }
   };
+
 
   return (
     <Router>
