@@ -34,6 +34,7 @@ function App() {
       startDate: params.startDate,
       endDate: params.endDate
     };
+    
 
     try {
       const response = await fetch('http://localhost:8000/submit', {
